@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Results </h1>
+	<h2>Test picked: </h2>
+    <p th:text="Username + ${test.username}"></p>
+    <p th:text="Password + ${test.password}"></p>
+    <p>Thanks for using innerTest Automation, please wait for email report.</p>
+    <a href="/test">For another test, click here.</a>
+</body>
+</html>
