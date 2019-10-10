@@ -8,133 +8,266 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
-import hello.Test;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+
+import modals.AccessToken;
+import modals.Token;
+import modals.TokenStatus;
+import modals.TopGames;
+import modals.User;
 
 public class FetchData {
 
-	
-	
-	public static String getToken(Test user) throws MalformedURLException {
-
-		// Adding double quotes
-		String passWord = "\"" + user.getPassword() + "\"";
-		String userName = "\"" + user.getUsername() + "\"";
-
+public static TopGames getTopGames(String code) throws MalformedURLException {
+		
+		TopGames obj= null;
+		
+		String client_Id = "fe1xi3mppo2ecie1rg4v02peiz2ig7";
+		
+		
 		// initializing token string
-		String token = null;
+		String token = code;
 
 		// getToken body data
-		final String getTokenBodyParams = "{" + "\"username\": " + userName + ", " + "\"password\": " + passWord + ""
-				+ "}";
+		
 
 		// initializing URL end point
-		URL getTokenURLobject = new URL("https://apq.inner-circle.io/getToken");
-
-		// initializing and building request method and headers.
-		HttpURLConnection getTokenRequest = null;
-		try {
-			getTokenRequest = (HttpURLConnection) getTokenURLobject.openConnection();
+		String getTopGamesURL ="https://api.twitch.tv/helix/games/top";
+		
+		
+		
+		
+		//getTokenRequest.setRequestProperty("Authorization", token);
+			
+		System.out.println();
+		
+		 StringBuilder result = new StringBuilder();
+	      URL url = new URL(getTopGamesURL);
+	      
+	     
+	      HttpURLConnection conn = null;
+	     
+	      
+		
+	      try {
+			conn = (HttpURLConnection) url.openConnection();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		try {
-			getTokenRequest.setRequestMethod("POST");
+	      try {
+			conn.setRequestMethod("GET");
 		} catch (ProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		getTokenRequest.setRequestProperty("Connection", "keep-alive");
-		getTokenRequest.setRequestProperty("Accept", "application/json");
-		getTokenRequest.setRequestProperty("Origin", "https://portal.inner-circle.io");
-		getTokenRequest.setRequestProperty("Host", "apq.inner-circle.io");
-		getTokenRequest.setRequestProperty("Content-Type", "application/json");
-		getTokenRequest.setDoOutput(true);
-
-		// Sending the request.
-		OutputStream getTokenOutputStream = null;
+	      conn.setRequestProperty("Client-ID", client_Id);
+	      BufferedReader rd = null;
 		try {
-			getTokenOutputStream = getTokenRequest.getOutputStream();
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		try {
-			getTokenOutputStream.write(getTokenBodyParams.getBytes());
+	      String line;
+	      try {
+			while ((line = rd.readLine()) != null) {
+			     result.append(line);
+			  }
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		try {
-			getTokenOutputStream.flush();
+	      try {
+			rd.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		try {
-			getTokenOutputStream.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// fetching response code.
-		int getTokenResponseCode = 0;
-		try {
-			getTokenResponseCode = getTokenRequest.getResponseCode();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("/getToken Response Code :  " + getTokenResponseCode  );
-		try {
-			System.out.println("/getToken Response Message : " + getTokenRequest.getResponseMessage() + "\n");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// if response code is 200, continue.
-		if (getTokenResponseCode == 200) { // success
-			// Writing response data
-			BufferedReader getTokenBufferReader = null;
-			try {
-				getTokenBufferReader = new BufferedReader(new InputStreamReader(getTokenRequest.getInputStream()));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			String getTokenInputLine;
-			StringBuffer getTokenResponse = new StringBuffer();
-			try {
-				while ((getTokenInputLine = getTokenBufferReader.readLine()) != null) {
-					getTokenResponse.append(getTokenInputLine);
-
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			try {
-				getTokenBufferReader.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			// inserting response body to string (token)
-			token = getTokenResponse.toString();
-
-			// printing the fetched token.
-			System.out.println("Token to use: " + token + "\n");
-
-		}
-		return token;
-
-	}
+	      
+	      Gson gson = new Gson();
+	      obj = gson.fromJson(result.toString(), TopGames.class);  
+	      
+	      System.out.println(obj.toString());
+	      return obj ;
+	   }
+			
+public static String getTokenDetails(String token) {
 	
+	
+	
+	
+
+	// getToken body data
+	
+
+	// initializing URL end point
+	String getUserURL ="https://api.twitch.tv/kraken/";
+	
+	
+	
+	
+	
+		
+	System.out.println();
+	
+	 StringBuilder result = new StringBuilder();
+      URL url = null;
+	try {
+		url = new URL(getUserURL);
+	} catch (MalformedURLException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+      HttpURLConnection conn = null;
+	try {
+		conn = (HttpURLConnection) url.openConnection();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+      try {
+		conn.setRequestMethod("GET");
+	} catch (ProtocolException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+      //conn.setRequestProperty("Client-ID", client_Id);
+      
+      String oauth= "OAuth "+token;
+      
+      conn.setRequestProperty("Authorization", oauth);
+      conn.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
+      
+      BufferedReader rd = null;
+	try {
+		rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+      String line;
+      try {
+		while ((line = rd.readLine()) != null) {
+		     result.append(line);
+		     
+		  }
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+      try {
+		rd.close();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+      
+      try {
+    	  System.out.println(conn.getResponseCode());
+		System.out.println(conn.getResponseMessage());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+      
+      JSONObject obj = new JSONObject(result.toString());
+
+      String user_id = obj.getJSONObject("token").getString("user_id");
+
+      System.out.println(user_id);
+      
+      return user_id ;
+}
+
+public static User getUserInfo(String id) {
+	
+		String client_Id = "fe1xi3mppo2ecie1rg4v02peiz2ig7";
+
+		// initializing URL end point
+		String getUserURL ="https://api.twitch.tv/kraken/users/"+id;
+		
+		User obj= null;
+		
+		
+		
+			
+		System.out.println(getUserURL);
+		
+		 StringBuilder result = new StringBuilder();
+	      URL url = null;
+		try {
+			url = new URL(getUserURL);
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	      HttpURLConnection conn = null;
+		try {
+			conn = (HttpURLConnection) url.openConnection();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	      try {
+			conn.setRequestMethod("GET");
+		} catch (ProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	      //conn.setRequestProperty("Client-ID", client_Id);
+	      
+	      
+	      
+	      conn.setRequestProperty("Client-ID", client_Id);
+	      conn.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
+	      
+	      BufferedReader rd = null;
+		try {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	      String line;
+	      try {
+			while ((line = rd.readLine()) != null) {
+			     result.append(line);
+			     
+			  }
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	      try {
+			rd.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	      
+	      try {
+	    	  System.out.println(conn.getResponseCode());
+			System.out.println(conn.getResponseMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	      
+	      Gson gson = new Gson();
+	      obj = gson.fromJson(result.toString(), User.class);  
+	      
+	    
+	      
+	      return obj ;
+	
+}
 	
 	
 }

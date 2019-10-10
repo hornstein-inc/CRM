@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/greeting}" th:object="${test}" method="post">
+    	
+    	
+ 		
+       	<a href="https://api.twitch.tv/kraken/oauth2/authorize?response_type=code&client_id=fe1xi3mppo2ecie1rg4v02peiz2ig7&redirect_uri=http://localhost:8080/greeting&scope=user_read" onclick="document.getElementById('my_form').submit();">submit</a>
+ </form>
+    
+    
+ 
+
+</body>
+</html>

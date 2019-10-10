@@ -4,9 +4,7 @@
     <title>~~Choose you'r test!~~</title>
 <style type="text/css">
 
-body{
-background:url(resources/templates/backr.png)
-}
+
 .multiselect {
   width: 200px;
 }
@@ -39,39 +37,42 @@ background:url(resources/templates/backr.png)
 
 </style>    
     
-<script type="text/javascript">
-var expanded = false;
 
-function showCheckboxes() {
-  var checkboxes = document.getElementById("checkboxes");
-  if (!expanded) {
-    checkboxes.style.display = "block";
-    expanded = true;
-  } else {
-    checkboxes.style.display = "none";
-    expanded = false;
-  }
-}
+<script>
 
-</script>    
+
+</script>
+
+
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <div style="text-align: center; border: 3px solid cyan;"  >
-	<h1>InnerTester Automation</h1>
-    <form action="#" th:action="@{/test}" th:object="${test}" method="post">
-    <input placeholder="Enter Username" th:field="*{username}">
-    <input placeholder="Enter Password" th:field="*{password}"> 
-        
-        
-    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+	<h1>Twitch CRM</h1>
+
+<h1 th:text="'Hello : ' + ${user.name}"></h1>  
+<span> <img th:src="${user.logo}"  /></span>
+   
+   
+<table>
+   <th:block th:each="ga : ${ga}">
+      <tr>
+         <td th:text="${ga.name}">...</td>
+         <td th:text="${ga.id}">...</td>
+      </tr>
+      <tr>
+         <td ><img th:src="${ga.box_art_url}" title="TODO" />    </td>
+      </tr>
+   </th:block>
+</table>
+		
+       
+   
     
-    
-    <a href=https://api.twitch.tv/kraken/oauth2/authorize?response_type=code&client_id=fe1xi3mppo2ecie1rg4v02peiz2ig7&redirect_uri=http://localhost:8080&scope=user_read>Connect with twitch</a>
     
    
-    </form>
+    
    
 </div>    
 </body>
