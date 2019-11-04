@@ -106,10 +106,10 @@ public String getCode(@RequestParam String code,@RequestParam String scope, Mode
 		String firstURL = g[i].getBox_art_url();
 		
 				
-		String firstsplitURL = firstURL.replace("{width}", "250");
+		String firstsplitURL = firstURL.replace("{width}", "1920");
 		
 				
-		String secondsplitURL = firstsplitURL.replace("{height}", "250");
+		String secondsplitURL = firstsplitURL.replace("{height}", "1080");
 		
 				
 	

@@ -1,79 +1,138 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>~~Choose you'r test!~~</title>
-<style type="text/css">
+    <title>CRM</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-.multiselect {
-  width: 200px;
+<style>
+
+#user_container{
+
+  
+  text-align: center;
+
+  border: 4px blueviolet;
 }
-.selectBox {
-  position: relative;
+
+#carouselExampleControls{
+
+  padding-top: 10px;
+
 }
-.selectBox select {
-  width: 100%;
-  font-weight: bold;
+
+.carousel-inner{
+
+ display:flex;
+justify-content: space-around;
+background: grey;
 }
-.overSelect {
+
+#gameName{
+
+  top: 80%;
+  left: 1%;
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-#checkboxes {
-  display: none;
-  border: 1px #dadada solid;
-}
-#checkboxes label {
-  display: block;
-}
-#checkboxes label:hover {
-  background-color: #1e90ff;
+  text-align: center;
+  background: #6441a5;
+  opacity: 0.7;
+  white-space: nowrap;
+  width: 200px;
+  border-radius: 5px;
+  word-wrap: break-word;
 }
 
+#playerNum{
 
+  top: 88%;
+  left: 1%;
+  position: absolute;
+  text-align: center;
+  background: #6441a5;
+  opacity: 0.7;
+  white-space: nowrap;
+  width: 200px;
+  border-radius: 5px;
+  word-wrap: break-word;
+}
 
-</style>    
-    
+body{
 
-<script>
+  background-color: #6441a5;
+}
 
+</style>
 
-</script>
-
-
-
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-<body>
-<div style="text-align: center; border: 3px solid cyan;"  >
-	<h1>Twitch CRM</h1>
 
+
+
+
+<body >
+
+
+<div id="user_container">
+  <h1> CRM</h1>
+  
+  
 <h1 th:text="'Hello : ' + ${user.name}"></h1>  
 <span> <img th:src="${user.logo}"  /></span>
+
+</div>
+
+
+
+
+
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+<div class="carousel-inner" >
+    
+
+    <div class="carousel-item active">
+      <h5 id="gameName" th:text="${ga[0].name}"></h5>
+      <p id="playerNum" th:text="${ga[0].id}"  />
+      <img  class="d-block w-50" th:src="${ga[0].box_art_url}" alt="First slide">
+      
+    </div>
+
+    <div class="carousel-item" th:each="ga : ${ga}">
+      <h5 id="gameName" th:text="${ga.name}"></h5>
+      <p id="playerNum" th:text="${ga.id}"  />
+      <img  class="d-block w-50" th:src="${ga.box_art_url}" alt="${ga.box_art_url}" > 
+      
+    </div>
    
+
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+
+</div>
+
+
+
+
+
+ 
+      
    
-<table>
-   <th:block th:each="ga : ${ga}">
-      <tr>
-         <td th:text="${ga.name}">...</td>
-         <td th:text="${ga.id}">...</td>
-      </tr>
-      <tr>
-         <td ><img th:src="${ga.box_art_url}" title="TODO" />    </td>
-      </tr>
-   </th:block>
-</table>
-		
-       
+
    
     
     
    
     
    
-</div>    
+  
 </body>
 </html>
